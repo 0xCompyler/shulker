@@ -1,11 +1,18 @@
 version: '3'
 
 services:
-  webserver:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+
+  shulkerbox:
+    depends_on:
+      - redis
     build:
       context: .
       dockerfile: backend.dockerfile
-      
+
     command: uvicorn main:app --host 0.0.0.0
     volumes:
       - .:/app

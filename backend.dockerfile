@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONPATH app
 
 # install dependencies
-COPY requirements.txt .
+COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # copy project
