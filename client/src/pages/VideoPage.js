@@ -9,7 +9,6 @@ import Graph from "../components/Graph";
 import  Axios  from "axios";
 import AI_URL from "../config/aiurl";
 
-
 const Para = ({ children, ...props }) => {
 	const highlight = props.highlight || null;
 	
@@ -36,34 +35,44 @@ const Para = ({ children, ...props }) => {
 
 const Comments = () => {
 
-	const [keywords,setKeywords] = useState(["great video","informative","loved it","fast"]);
+	const [keywords,setKeywords] = useState([]);
 
-	// useEffect(() => {
+	const {youtubeLink} = useParams();
 
-	// 	Axios.post(`${}`,{
-	// 		"commentsurl": "lol"
-	// 	})
-	// 	.then((res) => {
-	// 		setKeywords();
-	// 	})
-	// 	.catch((err) => {
-	// 		console.log(err);
-	// 	})		
-	// },[])
+	useEffect(() => {
+
+		let score = [];
+
+		Axios.post(`${AI_URL}/comments/analyze`,{
+			"commentsurl": `https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyCr01yrmzx3WDqfWUsv-4aRtoYRxd5mDYw&textFormat=plainText&part=snippet&videoId=${youtubeLink}&maxResults=100&`
+		})
+		.then((res) => {
+			score.push(res.data.positive_score);
+			score.push(res.data.negative_score);
+			score.push(res.data.neutral_score);
+			
+			setKeywords(res.data.keywords);
+		})
+		.catch((err) => {
+			console.log(err);
+		})		
+	},[])
 	
 	return (
 		<Scrollbars>
 			<div>
 				<div className="flex py-4">
 					<div className="flex h-fit flex-wrap gap-2 ">
-						{keywords.map(item => (
+						{keywords.length !== 0 ? keywords.map(item => (
 							<span
 								className="rounded-md border-2 border-yellow-600 bg-yellow-800 bg-opacity-25 box-decoration-clone p-1 px-2 font-bold text-yellow-50"
 								key={item}
 								>
 								{item}
 							</span>
-						))}
+						)) : <h3>
+								Loading...
+							</h3>}
 					</div>
 				</div>
 			</div>
@@ -71,28 +80,26 @@ const Comments = () => {
 	);
 };
 
-const QuizSection = () => {
+const QuizSection = ({text}) => {
 	
-	// useEffect(() => {
-	// 	//get quiz ques and ans
-	// 	Axios.post(`${AI_URL}/`,{
-	// 		"transcript": "lol"
-	// 	})
-	// 	.then((res) => {
-	// 		setQuestionnaire();
-	// 	})
-	// 	.catch((err) => {
-	// 		console.log(err);
-	// 	})		
-	// },[])
+	useEffect(() => {
+		//get quiz ques and ans
+		Axios.post(`${AI_URL}/quiz/generate`,{
+			"transcript": text
+		})
+		.then((res) => {
+			setQuestionnaire(res.data.questions);
+		})
+		.catch((err) => {
+			console.log(err);
+		})		
+	},[])
 
-	const [questionnaire,setQuestionnaire] = useState([{
-		"question":"what is bash"
-	}]);
+	const [questionnaire,setQuestionnaire] = useState([]);
 	
 	return (
 		<div className="mt-2 space-y-4">
-			{questionnaire.map((item, index) => (
+			{questionnaire.length !== 0 ? questionnaire.map((item, index) => (
 				<div
 				key={item.question + item.answer}
 					className="space-y-1 rounded-lg border-2 border-slate-600 bg-slate-600 bg-opacity-20 p-4 shadow-md"
@@ -102,7 +109,9 @@ const QuizSection = () => {
 						{item.answer}
 					</p> */}
 				</div>
-			))}
+			)) : <h3>
+					Loading...
+				</h3>}
 		</div>
 	);
 };
@@ -110,7 +119,27 @@ const QuizSection = () => {
 const VideoPage = () => {
 
 	const { youtubeLink } = useParams();
-	
+
+	const [score,setScore] = useState([]);
+
+	useEffect(() => {
+
+		let score = [];
+
+		Axios.post(`${AI_URL}/comments/analyze`,{
+			"commentsurl": `https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyCr01yrmzx3WDqfWUsv-4aRtoYRxd5mDYw&textFormat=plainText&part=snippet&videoId=${youtubeLink}&maxResults=100&`
+		})
+		.then((res) => {
+			score.push(res.data.positive_score);
+			score.push(res.data.neutral_score);
+			score.push(res.data.negative_score);
+			setScore(score);
+		})
+		.catch((err) => {
+			console.log(err);
+		})		
+	},[])
+
 	const videoSrc = useMemo(
 		() => ({
 			type: "video",
@@ -126,12 +155,12 @@ const VideoPage = () => {
 
 	useEffect(() => {
 		//get transcript
-		Axios.post(`${AI_URL}/transcribe/word_level`,{
+		Axios.post(`${AI_URL}/transcribe/youtube`,{
 			"youtube_url": `https://www.youtube.com/watch?v=${youtubeLink}`
 		})
 		.then((res) => {
 			console.log(res);
-			setText(res.data.turns[0].sentences);
+			setText(res.data.alternatives[0].transcript);
 		})
 		.catch((err) => {
 			console.log(err);
@@ -171,7 +200,7 @@ const VideoPage = () => {
 				</div>
 				<div className="col-span-1 row-span-2 flex flex-col rounded-md bg-zinc-800 p-6 pt-7">
 					<h1 className="text-3xl font-bold">Sentiment Analysis</h1>
-					<Graph />
+					<Graph score={score}/>
 				</div>
 				<div className="col-span-1 row-span-3 flex flex-col rounded-md bg-zinc-800 p-6 pt-7">
 					<h1 className="mb-4 text-3xl font-bold">Transcript</h1>
@@ -182,7 +211,7 @@ const VideoPage = () => {
 				<div className="col-span-1 row-span-3 flex flex-col rounded-md bg-zinc-800 p-6 pt-7">
 					<h1 className="mb-4 text-3xl font-bold">Quiz</h1>
 					<Scrollbars autoHide>
-						<QuizSection />
+						<QuizSection text={text} />
 					</Scrollbars>
 				</div>
 			</div>

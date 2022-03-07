@@ -36,18 +36,20 @@ ChartJS.register(
 	BarElement
 );
 
-const Graph = () => {
+const Graph = ({score}) => {
 	const chartRef = useRef();
+
+	console.log(score,"score");
 
 	const labels = ["Positive", "Neutral", "Negative"];
 
-	const randomNumberInRange = (min, max) =>
-		Math.floor(Math.random() * (max - min + 1)) + min;
+	// const randomNumberInRange = (min, max) =>
+	// 	Math.floor(Math.random() * (max - min + 1)) + min;
 
-	const getRandomData = options =>
-		Array(options.size)
-			.fill(0)
-			.map(() => randomNumberInRange(options.min, options.max));
+	// const getRandomData = options =>
+	// 	Array(options.size)
+	// 		.fill(0)
+	// 		.map(() => randomNumberInRange(options.min, options.max));
 
 	const accentColor = "219, 39, 119";
 	const borderColor = "120, 121, 135";
@@ -153,11 +155,7 @@ const Graph = () => {
 					backgroundColor: gradient,
 					borderRadius: 4,
 					pointBackgroundColor: `rgba(${accentColor}, 1)`,
-					data: getRandomData({
-						size: labels.length,
-						min: 0,
-						max: 100,
-					}),
+					data: score
 				},
 			],
 		});
