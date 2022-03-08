@@ -1,0 +1,15 @@
+{
+  "compilerOptions":{
+    "target":"ESNEXT",
+    "module":"commonjs",
+    "outDir":"dist",
+    "sourceMap":true,
+    "noImplicitAny":false,
+    "moduleResolution":"node",
+    "baseUrl":".",
+    "typeRoots": [ "./types", "./node_modules/@types"],
+    "esModuleInterop": true,
+  },
+  "typeRoots": [ "./types", "./node_modules/@types"],
+  "include": ["server.ts","src"]
+}

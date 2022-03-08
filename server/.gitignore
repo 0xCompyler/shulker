@@ -1,0 +1,9 @@
+# Nodejs dependecies
+node_modules/
+
+# Env files
+.env
+
+# Compiled javascript files
+# dist/**/*.js
+# dist/**/*.js.map
