@@ -1,0 +1,53 @@
+{
+	"name": "youtube-search",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@hughrun/feedfinder": "^1.0.8",
+		"@react-spring/web": "^9.4.3",
+		"axios": "^0.26.0",
+		"chart.js": "^3.7.1",
+		"firebase": "^9.6.7",
+		"framer-motion": "^6.2.8",
+		"lodash": "^4.17.4",
+		"plyr-react": "^3.2.1",
+		"react": "^16.8.0",
+		"react-chartjs-2": "^4.0.1",
+		"react-custom-scrollbars": "^4.2.1",
+		"react-dom": "^16.8.0",
+		"react-hot-toast": "^2.2.0",
+		"react-router-dom": "^6.2.1",
+		"react-scripts": "^5.0.0",
+		"rss-finder": "^2.1.5",
+		"rss-to-json": "^2.0.2",
+		"sass": "^1.49.9",
+		"simplebar-react": "^2.3.6",
+		"youtube-api-search": "^0.0.5",
+		"yt-channel-info": "^3.0.0"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	},
+	"devDependencies": {
+		"autoprefixer": "^10.4.2",
+		"postcss": "^8.4.7",
+		"prettier": "^2.5.1",
+		"prettier-plugin-tailwindcss": "^0.1.8",
+		"tailwindcss": "^3.0.23"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
+}
