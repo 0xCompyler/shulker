@@ -1,0 +1,43 @@
+@font-face {
+	font-family: "Wotfard";
+	src: local("Wotfard"), url("../fonts/Wotfard-Thin.woff2") format("woff2");
+	font-weight: 100;
+}
+
+@font-face {
+	font-family: "Wotfard";
+	src: local("Wotfard"),
+		url("../fonts/Wotfard-ExtraLight.woff2") format("woff2");
+	font-weight: 200;
+}
+
+@font-face {
+	font-family: "Wotfard";
+	src: local("Wotfard"), url("../fonts/Wotfard-Light.woff2") format("woff2");
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: "Wotfard";
+	src: local("Wotfard"), url("../fonts/Wotfard-Regular.woff2") format("woff2");
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: "Wotfard";
+	src: local("Wotfard"), url("../fonts/Wotfard-Medium.woff2") format("woff2");
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: "Wotfard";
+	src: local("Wotfard"),
+		url("../fonts/Wotfard-SemiBold.woff2") format("woff2");
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: "Wotfard";
+	src: local("Wotfard"), url("../fonts/Wotfard-Bold.woff2") format("woff2");
+	font-weight: 900;
+}
